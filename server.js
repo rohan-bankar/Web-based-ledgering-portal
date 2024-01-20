@@ -629,7 +629,8 @@ app.post("/pinkslip", checkAuthenticated, async (req, res, next) => {
   }
   try {
     const response = await generatePinkSlip(req.body, res.locals.email);
-    res.send(new ResponseHandler(response));
+    // res.send(new ResponseHandler(response));
+    res.redirect('/')
   } catch (error) {
     next(error);
   }
@@ -666,7 +667,8 @@ app.post("/accept-slip-request", checkAuthenticated, async (req, res, next) => {
   }
   try {
     const response = await generateRemark(req.body, res.locals.email);
-    res.send(new ResponseHandler(response));
+    // res.send(new ResponseHandler(response));
+    res.redirect('/')
   } catch (error) {
     next(error);
   }
@@ -929,7 +931,8 @@ app.post("/proforma", checkAuthenticated, async (req, res, next) => {
 
   try {
     const response = await generateProforma(req.body, res.locals.email);
-    res.send(new ResponseHandler(response));
+    // res.send(new ResponseHandler(response));
+    res.redirect('/')
   } catch (error) {
     next(error);
   }
@@ -965,7 +968,8 @@ app.post("/accept-proforma-request", checkAuthenticated, async (req, res, next) 
   }
   try {
     const response = await generateRemarkP(req.body, res.locals.email);
-    res.send(new ResponseHandler(response));
+    // res.send(new ResponseHandler(response));
+    res.redirect('/')
   } catch (error) {
     next(error);
   }
@@ -1006,33 +1010,150 @@ app.post("/Premarks", checkAuthenticated, async (req, res, next) => {
 
   const pdfDocument = require("pdfkit");
   const doc = new pdfDocument();
-  doc.rect(0, 0, 612, 792).fill("#E8A0BF");
+
+doc.font('Helvetica-Bold');
+doc.fontSize(22);
+doc.text("M.E.S. College of ENGINEERING,", { align: 'center' });
+doc.text("PUNE - 411001", { align: 'center' });
+
+doc.font('Helvetica-Bold');
+doc.fontSize(16);
+doc.text(`PROFORMA FOR PURCHASE OF ROLL CAGE MATERIAL `);
+doc.moveDown(.2);
+doc.fontSize(14);
+doc.text(`NAME OF THE DEPARTMENT: E&TC and Mechanical Engineering`, { align: 'left' });
+//   doc.font('Helvetica');
+doc.fontSize(12);
+doc.text(`1) Particular of the equipment: ${pdf.equipment}`, 55, 175, { align: 'justify' })
+doc.rect(50, 170, 500, 50).stroke();
+doc.moveDown(3);
+
+doc.text(`2) Specifications:`, 55, 255)
+doc.text(`${pdf.specification}`);
+doc.rect(50, 250, 500, 110).stroke();
+
+//   const PDFDocument = require('pdfkit');
+// const fs = require('fs');
+
+// Sample vendor data
+doc.text('3) Vendors:', 55, 400)
+doc.rect(50, 390, 500, 150).stroke();
+const vendors = [
+  { name: `${pdf.vendor_name}`, address: `${pdf.vendor_address}` },
+  { name: ` ${pdf.vendor_name1}`, address: `${pdf.vendor_address1}` },
+  { name: `${pdf.vendor_name2}`, address: `${pdf.vendor_address2}` }
+];
 
 
-  // pdf color change
-  doc.fillColor('black');
+// Set table headers
+const tableHeaders = ['Sr. No.', 'Name', 'Address'];
 
-  doc.font('Helvetica-Bold');
-  doc.fontSize(12);
-  doc.text("Modern Educations Society's College of Engineering,Pune-1.", {
-    align: 'center'
+// Set table column widths
+const columnWidths = [50, 150, 280];
+
+// Set initial y-axis position
+let posY = 430;
+
+// Helper function to draw a table row
+// Helper function to draw a table row
+function drawTableRow(rowData, posY) {
+    const posX = 55; // Starting x-axis position
+  
+    doc.y = posY;
+  
+    rowData.forEach((cell, index) => {
+      doc.text(cell, posX + columnWidths.slice(0, index).reduce((acc, val) => acc + val, 0), posY);
+    });
+  
+    doc.lineWidth(1).moveTo(posX, posY + 15).lineTo(posX + columnWidths.reduce((acc, val) => acc + val, 0), posY + 15).stroke();
+  }
+  
+  // Draw table headers
+  drawTableRow(tableHeaders, posY);
+  
+  // Draw table rows with vendor data
+  posY += 25; // Move down for the first row
+  vendors.forEach((vendor, index) => {
+    const rowData = [(index + 1).toString(), vendor.name, vendor.address];
+    drawTableRow(rowData, posY + (index * 20));
   });
-  doc.moveDown(5);
+  
+  doc.text(`4) Approximate Cost:`, 55, 575)
+  doc.text(`Rs.${pdf.cost}`)
+  doc.rect(50, 565, 500, 40).stroke();
+  // Finalize the PDF document
+  doc.text(`5) Justification for Purchase:`, 55, 640);
+  doc.text(`${pdf.justification}`, { align: 'justify' });
+  doc.rect(50, 635, 500, 70).stroke();
+  
+  doc.addPage();
+  
+  doc.text('6) Departmental Committee Members:',55,100);
+  
+  const committeeMembers = [
+    { name: `${pdf.member_name}`, signature: '' },
+    { name: `${pdf.member_name1}`, signature: '' },
+    { name: `${pdf.member_name2}`, signature: '' }
+  ];
+  
+  // Set table headers
+  const tableHeadersMember = ['Sr. No.', 'Name', 'Signature'];
+  
+  // Set initial y-axis position
+  let posYCommitteeMembers = doc.y + 20;
+  const columnWidthsMember = [50, 170, 275];
+  doc.rect(50, 90, 500, 150).stroke();
+  // Helper function to draw a table row
+  function drawTableRowMember(rowData, posY) {
+    const posX = 55; // Starting x-axis position
+  
+    rowData.forEach((cell, index) => {
+      // For the Sr. No. column, center the text
+      if (index === 0) {
+        const cellWidth = columnWidthsMember[index];
+        const textWidth = doc.widthOfString(cell);
+        const x = posX + (cellWidth - textWidth) / 2;
+        doc.text(cell, x, posY);
+      } else {
+        doc.text(cell, posX + columnWidthsMember.slice(0, index).reduce((acc, val) => acc + val, 0), posY);
+      }
+    });
+  
+    doc.lineWidth(1).moveTo(posX, posY + 15).lineTo(posX + columnWidthsMember.reduce((acc, val) => acc + val, 0), posY + 15).stroke();
+  }
+  
+  // Draw table headers
+  drawTableRowMember(tableHeadersMember, posYCommitteeMembers);
+  
+  // Draw table rows with committee members data
+// Draw table rows with committee members data
+posYCommitteeMembers += 25; // Move down for the first row
+committeeMembers.forEach((member, index) => {
+  const rowData = [(index + 1).toString(), member.name, member.signature];
+  drawTableRowMember(rowData, posYCommitteeMembers + (index * 20));
+});
 
-  doc.text(`Proforma No.: ${pdf.id}`)
-  doc.text(`Particular of Equipment: ${pdf.equipment}`)
-  doc.text(`Specification: ${pdf.specification}`)
-  doc.text(`Vendor 1: ${pdf.vendor_name}, ${pdf.vendor_address}`)
-  doc.text(`Vendor 2: ${pdf.vendor_name1}, ${pdf.vendor_address1}`)
-  doc.text(`Vendor 3: ${pdf.vendor_name2}, ${pdf.vendor_address2}`)
-  doc.text(`Approximate Cost: ${pdf.cost}`)
-  doc.text(`Justification for Purchase: ${pdf.justification}`)
-  doc.text(`Departmental Committee Members 1: ${pdf.member_name}`)
-  doc.text(`Departmental Committee Members 2: ${pdf.member_name1}`)
-  doc.text(`Departmental Committee Members 3: ${pdf.member_name2}`)
-  doc.text(`Meeting was held on: ${pdf.meeting}`)
+doc.text(`7) Meeting was held on: ${pdf.meeting}`,55,280)
+doc.rect(50, 270, 500, 30).stroke();
 
-  doc.text(`Remark:  ${pdfR.remark}`);
+doc.text('8) Submitted for Approval:',55,330)
+doc.rect(50, 320, 500, 80).stroke();
+doc.text(``);
+doc.text('Head of Department',400,380)
+
+doc.text('9) Finance Provision:',55,430)
+doc.rect(50, 420, 500, 80).stroke();
+doc.text(``);
+doc.text('Registrar',430,480)
+
+doc.text('10) Submitted for Approval:',55,530)
+doc.rect(50, 520, 500, 80).stroke();
+doc.text(``);
+doc.text('Principal',435,580)
+
+doc.moveDown(5);
+doc.text(`Remark:  ${pdfR.remark}`)
+doc.rect(50, 520, 500, 80).stroke();
 
 
   const filename = `Proforma ${pdf.id}.pdf`;
@@ -1238,7 +1359,8 @@ app.post("/comp_stat", checkAuthenticated, async (req, res, next) => {
   }  
   try {
     const response = await generateCompStat(req.body, res.locals.email);
-    res.send(new ResponseHandler(response));
+    // res.send(new ResponseHandler(response));
+    res.redirect('/')
   } catch (error) {
     next(error);
   }
@@ -1276,7 +1398,8 @@ app.post("/accept-Stats-request", checkAuthenticated, async (req, res, next) => 
   }
   try {
     const response = await generateRemarkStats(req.body, res.locals.email);
-    res.send(new ResponseHandler(response));
+    // res.send(new ResponseHandler(response));
+    res.redirect('/')
   } catch (error) {
     next(error);
   }
@@ -1319,17 +1442,21 @@ app.post("/Cremarks", checkAuthenticated, async (req, res, next) => {
   const pdfDocument = require("pdfkit");
   const doc = new pdfDocument();
 
-  doc.font('Helvetica-Bold');
-  doc.fontSize(12);
-  doc.text("Modern Educations Society's College of Engineering,Pune-1.", {
-    align: 'center'
-  });
-  doc.moveDown(5);
+doc.font('Helvetica-Bold');
+doc.fontSize(12);
+doc.text("MODERN EDUCATION SOCIETY'S COLLEGE OF ENGINEERING, PUNE 411001",{align:'center'});
+doc.text(`NAME OF DEPARTMENT: E&TC and Mechanical Engineering`,{align:'center'});
+doc.moveDown(1);
+doc.font('Helvetica');
+doc.fontSize(11);
+doc.text(`COMPARITIVE STATEMENT FOR: Purchase of Roll Cage Material.`,{align:'center'})
+doc.moveDown(1);
+doc.text(`DATE:${pdf.date}`)
+doc.moveDown(2);
 
   doc.text(`Proforma No.: ${pdf.id}`)
   doc.text(`Department: ${pdf.department}`)
   doc.text(`Comparative Statment for: ${pdf.for}`)
-  doc.text(`Date: ${pdf.date}`)
   doc.text(`Particulars: ${pdf.particulars}`)
   doc.text(`Particulars 2: ${pdf.particulars1}`)
   doc.text(`Particulars 3: ${pdf.particulars2}`)
@@ -1353,7 +1480,7 @@ app.post("/Cremarks", checkAuthenticated, async (req, res, next) => {
   doc.text(`Price 2: ${pdf.pricess1}`)
   doc.text(`Price 3: ${pdf.pricess2}`)
   doc.text(`Price 4: ${pdf.pricess3}`)
-
+  doc.moveDown(1);
   doc.text(`Remark:  ${pdfR.remark}`);
 
 

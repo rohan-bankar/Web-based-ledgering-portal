@@ -16,7 +16,6 @@
 <body>
 
     <nav>
-        <a href="/pinkslip">Pink Slip</a>
         <a href="/get-all-pending-slips">Pending Slips</a>
         <a href="/accept-slip-request">Take action</a>
     </nav>
@@ -76,11 +75,12 @@
                         <select name="requested_to" id="requested_to" class="requested_to">
                         <option value="hod@q">H.O.D</option>
                         <option value="registrar@q">Registrar</option>
+                        <option value="teach@q">Teacher</option>
                     </select>
                     </div>
                     
                     <br>
-                    <input type="submit" value="Submit">
+                    <input type="submit" onclick="myFunction()" value="Submit">
                 </form>
 
                 
@@ -91,4 +91,10 @@
 </body>
 
 </html>
+
+<script>
+    function myFunction() {
+      alert("Pink Slip sumbitted");
+    }
+    </script>
 

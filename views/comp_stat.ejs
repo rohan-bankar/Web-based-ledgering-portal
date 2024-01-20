@@ -8,8 +8,13 @@
    <title>Comparative Statement</title>
 </head>
 
+<header>
+   <h1>Comparative Statements</h1>
+   <h4>Web-based ledegering portal</h4>
+</header>
+
 <nav>
-   <a href="/get-all-Comp-Stats">Pending Comparative Statement</a> ||||
+   <a href="/get-all-Comp-Stats">Pending Slips</a>
 <a href="/accept-Stats-request">Take action</a>
 </nav>
 
@@ -182,6 +187,8 @@
              <select name="submitted_to" id="submitted_to" class="submitted_to">
              <option value="hod@q">H.O.D</option>
              <option value="registrar@q">Registrar</option>
+             <option value="teach@q">Teacher</option>
+
          </select>
          </div>
          <br>
@@ -193,8 +200,7 @@
                aria-describedby="emailHelp">
          </div>
       </div>
-      <button>submit</button>
-
+      <input type="submit" onclick="myFunction()" value="Submit">
    </form>
 
 
@@ -348,6 +354,12 @@
 
 </script>
 
+<script>
+   function myFunction() {
+     alert("Comparative Statement sumbitted");
+   }
+   </script>
+
 </body>
 </html>
 
@@ -381,3 +393,238 @@
          row.insertCell(3).innerHTML = date.value;
       }
    </script>  -->
+
+   <style>
+            body {
+    /* background-color: #f9ffce;  */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+margin: 15px 30px;
+font-size: 17px;
+padding: 8px;
+}
+
+nav a{
+margin-right: 10px;
+text-decoration: none;
+color: black;
+}
+
+nav a:hover{
+    color: #4caf84;
+}
+
+nav{
+   margin-bottom: 10px;
+}
+#myform {
+    /* background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+    background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+   
+}
+
+.main_heading {
+    color: #333;
+    /* text-align: center; */
+}
+
+.form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form input[type="text"],
+.form textarea,
+.form input[type="email"] {
+    /* width: 100%; */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #333;
+}
+
+.form input[type="submit"] {
+    background-color: #4caf84;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.form input[type="submit"]:hover {
+    background-color: #4caf84;
+}
+
+/* .inp-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+} */
+/* 
+.inp-group>div {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+
+/* .inp-group input {
+    flex: 1 1 auto;
+} */
+
+.delete {
+    cursor: pointer;
+    color: #ffa8a2;
+    font-size: 20px;
+}
+
+.container {
+    /* max-width: 800px; */
+    /* width: 100%; */
+    /* margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: ; */
+    background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form label {
+    margin-bottom: 5px;
+}
+
+.form input,
+.form textarea {
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.form input[type="submit"] {
+    background-color: #4caf84;
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.form input[type="submit"]:hover {
+    background-color: #4caf84;
+}
+
+/* .inp-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inp-group div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+} */
+
+.delete {
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.delete:hover {
+    background-color: darkred;
+}
+
+.main_heading {
+    /* text-align: center; */
+}
+
+hr {
+    border-top: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .col-md-3 {
+        width: 90%;
+    }
+}
+
+
+button.add {
+    background-color: #ceffd0;
+    /* set the background color */
+    color: rgb(0, 0, 0);
+    /* set the font color */
+    border: none;
+    /* remove the border */
+    padding: 5px 10px;
+    /* add padding */
+    font-size: 14px;
+    /* set the font size */
+    cursor: pointer;
+    /* change the cursor on hover */
+    transition: all 0.3s ease;
+    /* add a smooth transition effect */
+}
+
+button.add:hover {
+    background-color: #ffffff;
+    /* change the background color on hover */
+}
+
+input[type="submit"] {
+    background-color: #ceffd0;
+    /* set the background color */
+    color: rgb(0, 0, 0);
+    /* set the font color */
+    border: none;
+    /* remove the border */
+    padding: 10px 15px;
+    /* add padding */
+    font-size: 18px;
+    /* set the font size */
+    cursor: pointer;
+    /* change the cursor on hover */
+    transition: all 0.3s ease;
+    /* add a smooth transition effect */
+}
+
+input[type="submit"]:hover {
+    background-color: #ffffff;
+    /* change the background color on hover */
+}
+   </style>

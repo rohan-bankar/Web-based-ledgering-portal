@@ -9,11 +9,15 @@
     <title>Proforma</title>
 </head>
 
+<header>
+    <h1>Proforma</h1>
+    <h4>Web-based ledegering portal</h4>
+</header>
+
 <body>
 
     <nav>
-        <a href="/proforma">Proforma</a>||
-        <a href="/get-all-pending-proforma">Pending Proforma</a>||
+        <a href="/get-all-pending-proforma">Pending Proforma</a>
         <a href="/accept-proforma-request">Take action</a>
     </nav>
 
@@ -113,6 +117,8 @@
                         <select name="submitted_to" id="submitted_to" class="submitted_to">
                         <option value="hod@q">H.O.D</option>
                         <option value="registrar@q">Registrar</option>
+                        <option value="teach@q">Teacher</option>
+
                     </select>
                     </div>
                     <br>
@@ -131,7 +137,7 @@
                             aria-describedby="emailHelp">
                     </div>
                     <br>
-                    <input type="submit" value="Submit">
+                    <input type="submit" onclick="myFunction()" value="Submit">
             </div>
             <div>
 
@@ -210,6 +216,12 @@
                     }
 
                 </script>
+
+<script>
+    function myFunction() {
+      alert("Proforma sumbitted");
+    }
+    </script>
 
 </body>
 
@@ -323,19 +335,37 @@ hr {
 
 <style>
     body {
-        background-color: #f9ffce;
+        /* background-color: #f9ffce; */
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 15px 30px;
+    font-size: 17px;
+    padding: 8px;
+    }
+
+    nav a{
+    margin-right: 10px;
+    text-decoration: none;
+    color: black;
+    }
+
+    nav a:hover{
+        color: #4caf84;
     }
 
     .container {
-        background-color: #fff;
+        /* background-color: #fff;
         padding: 30px;
         border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+        background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
     }
 
     .main_heading {
         color: #333;
-        text-align: center;
+        /* text-align: center; */
     }
 
     .form label {
@@ -354,11 +384,10 @@ hr {
         border-radius: 3px;
         font-size: 16px;
         color: #333;
-        /* margin-bottom: 20px; */
     }
 
     .form input[type="submit"] {
-        background-color: #4CAF50;
+        background-color: #4caf84;
         color: #fff;
         border: none;
         padding: 10px 20px;
@@ -368,7 +397,7 @@ hr {
     }
 
     .form input[type="submit"]:hover {
-        background-color: #3e8e41;
+        background-color: #4caf84;
     }
 
     /* .inp-group {
@@ -399,7 +428,8 @@ hr {
     }
 
     .container {
-        max-width: 800px;
+        /* max-width: 800px; */
+        /* width: 100%; */
         margin: 0 auto;
         font-family: Arial, sans-serif;
     }
@@ -423,7 +453,7 @@ hr {
     }
 
     .form input[type="submit"] {
-        background-color: #4CAF50;
+        background-color: #4caf84;
         color: white;
         cursor: pointer;
         padding: 10px 20px;
@@ -433,7 +463,7 @@ hr {
     }
 
     .form input[type="submit"]:hover {
-        background-color: #3e8e41;
+        background-color: #4caf84;
     }
 
     /* .inp-group {
@@ -463,7 +493,7 @@ hr {
     }
 
     .main_heading {
-        text-align: center;
+        /* text-align: center; */
     }
 
     hr {
